@@ -1,4 +1,5 @@
 import { Component } from "react";
+import CardList from "./component/card-list/card-list.component.jsx";
 // import logo from "./logo.svg";
 import "./App.css";
 
@@ -26,8 +27,11 @@ class App extends Component {
       });
   }
   render() {
-    let filteredArr = this.state.monsters.filter((x) => {
-      return x.name.includes(this.state.searchField);
+    let { monsters, searchField } = this.state;
+    let { _renderMonster } = this;
+
+    let filteredArr = monsters.filter((x) => {
+      return x.name.includes(searchField);
     });
     return (
       <div className="App">
@@ -35,19 +39,19 @@ class App extends Component {
           className="search-box"
           type="search"
           placeholder="Name your monster"
-          onChange={(event) => this._renderMonster(event.target.value)}
+          onChange={this._renderMonster}
         />
-        <main className="box">
-          {filteredArr.map((m) => {
-            return <h1 key={m.id}> {m.name}</h1>;
-          })}
-        </main>
+        <CardList />
+        {filteredArr.map((m) => {
+          return <h1 key={m.id}> {m.name}</h1>;
+        })}
       </div>
     );
   }
-  _renderMonster(filter = "") {
+  _renderMonster = (event) => {
+    let filter = event.target.value;
     this.setState({ searchField: filter });
-  }
+  };
 }
 
 export default App;
