@@ -30,7 +30,7 @@ class App extends Component {
     let { monsters, searchField } = this.state;
     let { _renderMonster } = this;
 
-    let filteredArr = monsters.filter((x) => {
+    let filteredMonster = monsters.filter((x) => {
       return x.name.includes(searchField);
     });
     return (
@@ -39,12 +39,9 @@ class App extends Component {
           className="search-box"
           type="search"
           placeholder="Name your monster"
-          onChange={this._renderMonster}
+          onChange={_renderMonster}
         />
-        <CardList />
-        {filteredArr.map((m) => {
-          return <h1 key={m.id}> {m.name}</h1>;
-        })}
+        <CardList monster={filteredMonster} />
       </div>
     );
   }
