@@ -7,7 +7,7 @@ import "./App.css";
 class App extends Component {
   constructor() {
     super();
-    this.state = { monsters: [], searchField: "" };
+    this.state = { robots: [], searchField: "" };
   }
   componentDidMount() {
     this.fetching();
@@ -21,30 +21,30 @@ class App extends Component {
         // console.log(userss);
         this.setState(
           () => {
-            return { monsters: userss };
+            return { robots: userss };
           },
           () => console.log(this.state)
         );
       });
   }
   render() {
-    let { monsters, searchField } = this.state;
-    let { _renderMonster } = this;
+    let { robots, searchField } = this.state;
+    let { _renderrobots } = this;
 
-    let filteredMonster = monsters.filter((x) => {
+    let filteredrobots = robots.filter((x) => {
       return x.name.includes(searchField);
     });
     return (
       <div className="App">
         <SearchBox
-          onSearchChange={_renderMonster}
-          placeholder="search monsters"
+          onSearchChange={_renderrobots}
+          placeholder="search robotss"
         />
-        <CardList monster={filteredMonster} />
+        <CardList robots={filteredrobots} />
       </div>
     );
   }
-  _renderMonster = (event) => {
+  _renderrobots = (event) => {
     let filter = event.target.value;
     this.setState({ searchField: filter });
   };
