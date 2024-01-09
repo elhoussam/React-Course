@@ -1,14 +1,15 @@
 // import { Component } from "react";
 import CardList from "./component/card-list/card-list.component.jsx";
 import SearchBox from "./component/search-box/search-box.component.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 
 const App = () => {
-  console.log("render");
+  // console.log("render");
   const [searchField, setsearchField] = useState("");
   const [robots, setRobots] = useState([]);
+  const [filteredRobots, setfilteredRobots] = useState(robots);
   // console.log({ searchField });
 
   let _renderrobots = (event) => {
@@ -17,20 +18,29 @@ const App = () => {
     // this.setState({ searchField: filter });
   };
 
-  fetch("https://jsonplaceholder.typicode.com/users")
-    .then((res) => {
-      return res.json();
-    })
-    .then((userss) => {
-      setRobots(userss);
-    });
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        return res.json();
+      })
+      .then((userss) => {
+        setRobots(userss);
+      });
+  }, []);
 
-  const filteredRobots = robots.filter((x) => {
-    return x.name.includes(searchField);
-  });
+  useEffect(() => {
+    const newfilteredRobots = robots.filter((x) => {
+      return x.name.includes(searchField);
+    });
+    setfilteredRobots(newfilteredRobots);
+    console.log(" render ");
+  }, [robots, searchField]);
+
   return (
     <div className="App">
       <SearchBox onSearchChange={_renderrobots} placeholder="search robots" />
+
+      <CardList robots={filteredRobots} />
     </div>
   );
 };
