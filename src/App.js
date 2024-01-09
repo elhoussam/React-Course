@@ -1,9 +1,40 @@
-import { Component } from "react";
+// import { Component } from "react";
 import CardList from "./component/card-list/card-list.component.jsx";
 import SearchBox from "./component/search-box/search-box.component.jsx";
+import { useState } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 
+const App = () => {
+  console.log("render");
+  const [searchField, setsearchField] = useState("");
+  const [robots, setRobots] = useState([]);
+  // console.log({ searchField });
+
+  let _renderrobots = (event) => {
+    let filter = event.target.value;
+    setsearchField(filter);
+    // this.setState({ searchField: filter });
+  };
+
+  fetch("https://jsonplaceholder.typicode.com/users")
+    .then((res) => {
+      return res.json();
+    })
+    .then((userss) => {
+      setRobots(userss);
+    });
+
+  const filteredRobots = robots.filter((x) => {
+    return x.name.includes(searchField);
+  });
+  return (
+    <div className="App">
+      <SearchBox onSearchChange={_renderrobots} placeholder="search robots" />
+    </div>
+  );
+};
+/* 
 class App extends Component {
   constructor() {
     super();
@@ -34,6 +65,7 @@ class App extends Component {
     let filteredrobots = robots.filter((x) => {
       return x.name.includes(searchField);
     });
+
     return (
       <div className="App">
         <SearchBox
@@ -50,4 +82,5 @@ class App extends Component {
   };
 }
 
+*/
 export default App;
