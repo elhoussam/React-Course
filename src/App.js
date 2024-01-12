@@ -8,6 +8,7 @@ import "./App.css";
 const App = () => {
   // console.log("render");
   const [searchField, setsearchField] = useState("");
+  const [title, settitle] = useState("");
   const [robots, setRobots] = useState([]);
   const [filteredRobots, setfilteredRobots] = useState(robots);
   // console.log({ searchField });
@@ -15,6 +16,11 @@ const App = () => {
   let _renderrobots = (event) => {
     let filter = event.target.value;
     setsearchField(filter);
+    // this.setState({ searchField: filter });
+  };
+  let _onChangeTitle = (event) => {
+    let filter = event.target.value;
+    settitle(filter);
     // this.setState({ searchField: filter });
   };
 
@@ -38,7 +44,9 @@ const App = () => {
 
   return (
     <div className="App">
+      <h1 className="app-title">{title}</h1>
       <SearchBox onSearchChange={_renderrobots} placeholder="search robots" />
+      <SearchBox onSearchChange={_onChangeTitle} placeholder="" />
 
       <CardList robots={filteredRobots} />
     </div>
